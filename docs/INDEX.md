@@ -86,7 +86,6 @@ Este é o hub central de toda a documentação do projeto. Escolha o caminho ade
 - **[GUIA_PARA_LEIGOS.md](GUIA_PARA_LEIGOS.md)** - Guia super simples para leigos
 - **[REFERENCIA_RAPIDA.md](REFERENCIA_RAPIDA.md)** - Guia rápido (1 página)
 - **[GLOSSARIO.md](GLOSSARIO.md)** - Glossário técnico completo
-- **[SUMARIO_EXECUTIVO.md](SUMARIO_EXECUTIVO.md)** - Documento executivo
 - **[AWS_MCP_RESUMO.md](AWS_MCP_RESUMO.md)** - Resumo AWS MCP
 
 ### 📋 Índice e Navegação

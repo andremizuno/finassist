@@ -395,8 +395,8 @@ HD (disco rígido) na internet da Microsoft. Seus arquivos ficam lá.
 - Pergunte para quem configurou seu assistente
 
 **Se você entende um pouco de tecnologia:**
-- Leia: [Sumário Executivo](SUMARIO_EXECUTIVO.md)
-- Veja: [Referência Rápida](REFERENCIA_RAPIDA.md)
+- Leia: [Referência Rápida](REFERENCIA_RAPIDA.md)
+- Veja: [Glossário](GLOSSARIO.md)
 
 **Se você é programador:**
 - Leia: [Arquitetura Completa](ARQUITETURA.md)
@@ -500,13 +500,10 @@ Configure alarmes no celular:
 ### Próximo Nível:
 Agora que entendeu o básico, você pode:
 
-1. **Ver o Sumário Executivo** (um pouco mais técnico)
-   - [SUMARIO_EXECUTIVO.md](SUMARIO_EXECUTIVO.md)
-
-2. **Entender como configurar** (passo a passo)
+1. **Entender como configurar** (passo a passo)
    - [PRIMEIROS_PASSOS.md](PRIMEIROS_PASSOS.md)
 
-3. **Ver tudo que existe** (índice completo)
+2. **Ver tudo que existe** (índice completo)
    - [INDEX.md](INDEX.md)
 
 **Mas honestamente?** Se você é só usuário, este guia já é suficiente! 😊

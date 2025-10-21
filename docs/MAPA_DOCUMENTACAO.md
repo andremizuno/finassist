@@ -16,7 +16,7 @@ docs/
 ├── 🏠 PONTOS DE ENTRADA
 │   ├── INDEX.md                    ⭐ Comece aqui!
 │   ├── README.md                   📋 Índice completo
-│   └── SUMARIO_EXECUTIVO.md        👔 Para não-técnicos
+│   └── GUIA_PARA_LEIGOS.md         💬 Para não-técnicos
 │
 ├── 🏗️ ARQUITETURA
 │   ├── ARQUITETURA.md              📐 Documentação completa
@@ -144,8 +144,8 @@ docs/
 **Objetivo**: Avaliar decisões e propor melhorias
 
 ```
-1. SUMARIO_EXECUTIVO.md
-   └─ Overview de negócio
+1. GUIA_PARA_LEIGOS.md (opcional)
+   └─ Entendimento inicial simples
 
 2. ARQUITETURA.md (completo)
    └─ Arquitetura detalhada
@@ -166,21 +166,21 @@ docs/
 
 ---
 
-### 👔 Stakeholder / Gestor
+### 👔 Stakeholder / Gestor / Não-Técnico
 
 **Objetivo**: Entender valor e custos
 
 ```
-1. SUMARIO_EXECUTIVO.md
+1. GUIA_PARA_LEIGOS.md
+   └─ Linguagem super simples
    └─ O que é, como funciona, custos
-   └─ ROI e benefícios
-   └─ Roadmap futuro
+   └─ Sem jargão técnico
 
 2. INDEX.md (opcional)
    └─ Visão geral navegável
 ```
 
-**Tempo estimado**: 30 minutos
+**Tempo estimado**: 20-30 minutos
 
 ---
 
@@ -239,8 +239,8 @@ REFERENCIA_RAPIDA.md
 
 #### Custos
 ```
-SUMARIO_EXECUTIVO.md
-  └─ Seção: Custos
+GUIA_PARA_LEIGOS.md
+  └─ Seção: Quanto Custa
 
 ARQUITETURA.md
   └─ Seção: Escalabilidade e Performance → Custos
@@ -282,14 +282,14 @@ PRIMEIROS_PASSOS.md
 | DIAGRAMAS.md | ~500 | 8 | Visual |
 | GLOSSARIO.md | ~550 | 9 | Referência |
 | REFERENCIA_RAPIDA.md | ~350 | 6 | Prático |
-| SUMARIO_EXECUTIVO.md | ~450 | 7 | Executivo |
+| GUIA_PARA_LEIGOS.md | ~515 | 8 | Para Leigos |
 | INDEX.md | ~450 | 7 | Navegação |
 | README.md (docs) | ~250 | 4 | Índice |
 | SETUP_AMBIENTE.md | ~400 | 6 | Tutorial |
 | PRIMEIROS_PASSOS.md | ~300 | 5 | Tutorial |
 | CHANGELOG_DOCS.md | ~350 | 6 | Controle |
 | MAPA_DOCUMENTACAO.md | ~300 | 5 | Navegação |
-| **TOTAL** | **~5400** | **~88** | **Completo** |
+| **TOTAL** | **~5465** | **~89** | **Completo** |
 
 *Estimativa baseada em impressão padrão (60 linhas/página)
 
@@ -320,7 +320,7 @@ PRIMEIROS_PASSOS.md
 ```
 Nível 1: RESUMO (5 min)
 │
-├─ SUMARIO_EXECUTIVO.md
+├─ GUIA_PARA_LEIGOS.md
 └─ INDEX.md
 
 Nível 2: OVERVIEW (30 min)
