@@ -1,0 +1,25 @@
+# Configuração do Flake8 para qualidade de código
+
+[flake8]
+max-line-length = 100
+exclude = 
+    .git,
+    __pycache__,
+    .venv,
+    venv,
+    .aws-sam,
+    .pytest_cache,
+    node_modules,
+    *.egg-info
+
+# Ignorar alguns avisos específicos
+ignore = 
+    E203,  # whitespace before ':'
+    E501,  # line too long (gerenciado pelo black)
+    W503,  # line break before binary operator
+
+per-file-ignores =
+    __init__.py:F401  # imported but unused
+
+max-complexity = 10
+

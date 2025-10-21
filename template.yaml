@@ -1,0 +1,146 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Assistente Financeiro Serverless
+
+  Aplicação serverless para gerenciar finanças pessoais via WhatsApp
+  usando OpenAI Assistants API e Microsoft Excel.
+
+# Mais informações sobre Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 60
+    MemorySize: 512
+    Runtime: python3.11
+    Environment:
+      Variables:
+        LOG_LEVEL: INFO
+
+Resources:
+  # Função Lambda principal
+  FinancialAssistantFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: FinancialAssistantLambda
+      CodeUri: .
+      Handler: lambda_function.lambda_handler
+      Description: Processa mensagens do WhatsApp e interage com OpenAI Assistant
+      Timeout: 60
+      MemorySize: 512
+
+      # Variáveis de ambiente
+      # IMPORTANTE: Em produção, use AWS Secrets Manager ou Parameter Store
+      # para credenciais sensíveis ao invés de variáveis de ambiente
+      Environment:
+        Variables:
+          OPENAI_API_KEY: !Ref OpenAIAPIKey
+          ASSISTANT_ID: !Ref AssistantID
+          TWILIO_ACCOUNT_SID: !Ref TwilioAccountSID
+          TWILIO_AUTH_TOKEN: !Ref TwilioAuthToken
+          TWILIO_WHATSAPP_NUMBER: !Ref TwilioWhatsAppNumber
+          MS_GRAPH_CLIENT_ID: !Ref MSGraphClientID
+          MS_GRAPH_CLIENT_SECRET: !Ref MSGraphClientSecret
+          MS_GRAPH_TENANT_ID: !Ref MSGraphTenantID
+          MS_GRAPH_REFRESH_TOKEN: !Ref MSGraphRefreshToken
+          DYNAMODB_TABLE_NAME: !Ref ThreadsTable
+          TOOL_EXECUTION_TIMEOUT_SECONDS: 60
+          ASSISTANT_RUN_POLLING_INTERVAL_SECONDS: 1
+
+      # Políticas IAM
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ThreadsTable
+
+      # Eventos (API Gateway)
+      Events:
+        TwilioWebhook:
+          Type: Api
+          Properties:
+            Path: /webhook/whatsapp
+            Method: POST
+            RestApiId: !Ref FinancialAssistantAPI
+
+  # API Gateway
+  FinancialAssistantAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: FinancialAssistantAPI
+      StageName: prod
+      Cors:
+        AllowMethods: "'POST, OPTIONS'"
+        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+        AllowOrigin: "'*'"
+
+  # Tabela DynamoDB para armazenar threads
+  ThreadsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: FinancialAssistantThreads
+      BillingMode: PAY_PER_REQUEST # On-demand pricing
+      AttributeDefinitions:
+        - AttributeName: sender_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: sender_id
+          KeyType: HASH
+      Tags:
+        - Key: Application
+          Value: FinancialAssistant
+
+# Parâmetros (valores fornecidos no deploy)
+Parameters:
+  OpenAIAPIKey:
+    Type: String
+    Description: Chave de API da OpenAI
+    NoEcho: true
+
+  AssistantID:
+    Type: String
+    Description: ID do Assistant da OpenAI
+
+  TwilioAccountSID:
+    Type: String
+    Description: Twilio Account SID
+    NoEcho: true
+
+  TwilioAuthToken:
+    Type: String
+    Description: Twilio Auth Token
+    NoEcho: true
+
+  TwilioWhatsAppNumber:
+    Type: String
+    Description: Número WhatsApp do Twilio (formato whatsapp:+1234567890)
+
+  MSGraphClientID:
+    Type: String
+    Description: Azure AD Client ID para Microsoft Graph
+
+  MSGraphClientSecret:
+    Type: String
+    Description: Azure AD Client Secret para Microsoft Graph
+    NoEcho: true
+
+  MSGraphTenantID:
+    Type: String
+    Description: Azure AD Tenant ID (ou 'common' para contas pessoais)
+    Default: common
+
+  MSGraphRefreshToken:
+    Type: String
+    Description: Refresh Token inicial do Microsoft Graph
+    NoEcho: true
+
+# Outputs (valores exportados após deploy)
+Outputs:
+  ApiUrl:
+    Description: URL do endpoint da API Gateway
+    Value: !Sub "https://${FinancialAssistantAPI}.execute-api.${AWS::Region}.amazonaws.com/prod/webhook/whatsapp"
+
+  FunctionArn:
+    Description: ARN da função Lambda
+    Value: !GetAtt FinancialAssistantFunction.Arn
+
+  TableName:
+    Description: Nome da tabela DynamoDB
+    Value: !Ref ThreadsTable
