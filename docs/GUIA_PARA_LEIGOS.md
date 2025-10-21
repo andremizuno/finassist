@@ -30,7 +30,7 @@ Não precisa instalar app, não precisa aprender nada complicado. **É só conve
 **Assistente responde:**
 > ✅ Anotado! R$ 45,00 em Alimentação registrado!
 
-**O que aconteceu?** 
+**O que aconteceu?**
 O assistente entendeu que você gastou dinheiro, identificou que foi com comida, e salvou isso automaticamente na sua planilha de gastos.
 
 ---
@@ -477,8 +477,8 @@ Configure alarmes no celular:
 
 ---
 
-**Criado em**: 21/10/2025  
-**Para**: Pessoas normais que querem controlar dinheiro sem dor de cabeça  
+**Criado em**: 21/10/2025
+**Para**: Pessoas normais que querem controlar dinheiro sem dor de cabeça
 **Versão**: 1.0 (Para Leigos)
 
 ---
