@@ -56,6 +56,13 @@ Bem-vindo à documentação completa do projeto! Aqui você encontrará todos os
 
 ### 📖 Referências
 
+- **[GUIA_PARA_LEIGOS.md](GUIA_PARA_LEIGOS.md)** - 💬 Guia super simples para não-técnicos
+  - Explicação em linguagem cotidiana
+  - Sem jargão técnico
+  - Exemplos do dia a dia
+  - Perguntas e respostas
+  - Para quem não entende nada de tecnologia
+
 - **[REFERENCIA_RAPIDA.md](REFERENCIA_RAPIDA.md)** - ⚡ Guia de referência em uma página
   - Visão em 30 segundos
   - Comandos essenciais
