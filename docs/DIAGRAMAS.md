@@ -211,46 +211,46 @@ flowchart TD
 ```mermaid
 flowchart TD
     A[Usuário envia<br/>mensagem de voz<br/>pelo WhatsApp] --> B[Twilio recebe áudio]
-    
+
     B --> C[Webhook POST<br/>com MediaUrl0]
-    
+
     C --> D[Lambda extrai<br/>media_url e<br/>media_content_type]
-    
+
     D --> E{É áudio?}
-    
+
     E -->|Sim| F[Audio Service:<br/>process_audio_message]
     E -->|Não| Z[Processa como<br/>texto normal]
-    
+
     F --> G[Download áudio<br/>da URL do Twilio]
-    
+
     G --> H[HTTP GET com<br/>Basic Auth<br/>Account SID + Token]
-    
+
     H --> I{Download OK?}
-    
+
     I -->|Não| J[Log erro +<br/>mensagem genérica]
     I -->|Sim| K[Bytes do arquivo<br/>áudio OGG/MP3]
-    
+
     K --> L[Whisper API:<br/>transcrever áudio]
-    
+
     L --> M[POST /audio/transcriptions<br/>model: whisper-1<br/>language: pt]
-    
+
     M --> N{Transcrição OK?}
-    
+
     N -->|Não| O[Log erro +<br/>fallback para texto]
     N -->|Sim| P[Texto transcrito<br/>em português]
-    
+
     P --> Q{Tem texto<br/>também?}
-    
+
     Q -->|Sim| R[Combinar:<br/>texto +<br/>transcrição]
     Q -->|Não| S[Usar apenas<br/>transcrição]
-    
+
     R --> T[Mensagem final<br/>para Assistant]
     S --> T
     O --> T
     J --> T
-    
+
     T --> U[Continua fluxo<br/>normal do Assistant]
-    
+
     style F fill:#ffe1e1
     style L fill:#e1f5ff
     style P fill:#e1ffe1
