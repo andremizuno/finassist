@@ -99,13 +99,18 @@ O **Assistente Financeiro** é uma aplicação serverless construída com arquit
               │   ┌─────▼─────┐  ┌───────▼────┐  ┌──────▼──┐
               │   │ services/ │  │data_access/│  │ tools/  │
               │   └───────────┘  └────────────┘  └─────────┘
-              └─────┬─────────┬─────────┬──────────────┬─────┘
-                    │         │         │              │
-        ┌───────────▼──┐  ┌───▼──────┐ │  ┌───────────▼──────────┐
-        │ OpenAI       │  │ Twilio   │ │  │ Microsoft Graph API  │
-        │ Assistant    │  │ Service  │ │  │ (Excel/OneDrive)     │
-        │ API          │  └──────────┘ │  └──────────────────────┘
-        └──────────────┘                │
+              └─────┬───┬───┬─────────┬──────────────┬───────┘
+                    │   │   │         │              │
+        ┌───────────▼┐ ┌▼─────────┐  │  ┌───────────▼──────────┐
+        │ OpenAI     │ │ Audio    │  │  │ Microsoft Graph API  │
+        │ Assistant  │ │ Service  │  │  │ (Excel/OneDrive)     │
+        │ API        │ │ (Whisper)│  │  └──────────────────────┘
+        └────────────┘ └──────────┘  │
+                           │          │  ┌───────────┐
+                           └──────────┼─→│ Twilio    │
+                                      │  │ Media API │
+                                      │  └───────────┘
+                                      │
                                         │
                               ┌─────────▼─────────┐
                               │  💾 DynamoDB      │
@@ -211,7 +216,37 @@ Event (API Gateway)
 
 ---
 
-#### 3.2. `twilio_service.py`
+#### 3.2. `audio_service.py`
+
+**Responsabilidade**: Processamento de mensagens de áudio
+
+**Funções Principais:**
+- `download_audio(media_url)`: Baixa arquivo de áudio da URL do Twilio
+- `transcribe_audio(audio_data, filename)`: Transcreve áudio usando Whisper API
+- `process_audio_message(media_url)`: Orquestra download e transcrição completa
+
+**Fluxo de Processamento:**
+```
+1. Receber media_url do Twilio
+   ↓
+2. Download do áudio com autenticação (Account SID + Auth Token)
+   ↓
+3. Transcrever usando OpenAI Whisper API (português)
+   ↓
+4. Retornar texto transcrito
+```
+
+**Formatos Suportados:**
+- OGG (formato padrão do WhatsApp)
+- MP3, MP4, MPEG, MPGA, M4A, WAV, WEBM
+
+**Autenticação:**
+- Download: HTTP Basic Auth (Twilio credentials)
+- Transcrição: OpenAI API Key (mesma do Assistant)
+
+---
+
+#### 3.3. `twilio_service.py`
 
 **Responsabilidade**: Integração com Twilio e geração TwiML
 
@@ -230,7 +265,7 @@ Event (API Gateway)
 
 ---
 
-#### 3.3. `excel_service.py`
+#### 3.4. `excel_service.py`
 
 **Responsabilidade**: Integração com Microsoft Graph API (Excel)
 
@@ -375,7 +410,45 @@ OpenAI Assistant → requires_action (tool_calls)
 
 ---
 
-### Cenário 2: Consultar Gastos
+### Cenário 2: Adicionar Despesa via Áudio
+
+```
+1. Usuário: [Envia áudio de voz] "Gastei quarenta e cinco reais no almoço hoje"
+   ↓
+2. WhatsApp → Twilio → API Gateway → Lambda
+   ↓
+3. lambda_function.lambda_handler()
+   - Parse: From=whatsapp:+5511999999999
+   - Body="" (vazio)
+   - MediaUrl0="https://api.twilio.com/2010-04-01/.../Media/ME..."
+   - MediaContentType0="audio/ogg"
+   ↓
+4. conversation_manager.handle_incoming_message(sender_id, "", media_url, "audio/ogg")
+   ↓
+5. Detecta que é áudio → audio_service.process_audio_message(media_url)
+   ↓
+6. audio_service.download_audio(media_url)
+   - HTTP GET com Basic Auth (Twilio credentials)
+   - Retorna bytes do arquivo OGG
+   ↓
+7. audio_service.transcribe_audio(audio_data)
+   - Chama OpenAI Whisper API
+   - Retorna: "Gastei quarenta e cinco reais no almoço hoje"
+   ↓
+8. conversation_manager._combine_text_and_audio("", transcription)
+   - Retorna apenas a transcrição (sem texto adicional)
+   ↓
+9-19. [Mesmo fluxo do Cenário 1 a partir daqui]
+    - Criar/obter thread
+    - Adicionar mensagem transcrita
+    - Executar Assistant
+    - Tool call: add_expense
+    - Resposta: "Despesa registrada!"
+```
+
+---
+
+### Cenário 3: Consultar Gastos
 
 ```
 1. Usuário: "Quanto gastei em alimentação este mês?"
@@ -478,7 +551,9 @@ Usuário recebe: "Você gastou R$ 450,00 em Alimentação este mês, em 8 transa
 
 ## 🔌 Integrações Externas
 
-### 1. OpenAI Assistants API
+### 1. OpenAI APIs
+
+#### 1.1. Assistants API
 
 **Endpoint**: `https://api.openai.com/v1/`
 
@@ -497,6 +572,33 @@ Usuário recebe: "Você gastou R$ 450,00 em Alimentação este mês, em 8 transa
 - Rate limit: 60 requests/minute (tier dependente)
 - Timeout: Configurável via polling
 
+#### 1.2. Whisper API (Transcrição de Áudio)
+
+**Endpoint**: `https://api.openai.com/v1/audio/transcriptions`
+
+**Método**: `POST`
+
+**Parâmetros:**
+- `file`: Arquivo de áudio (binary)
+- `model`: "whisper-1"
+- `language`: "pt" (português)
+
+**Formatos Suportados:**
+- OGG, MP3, MP4, MPEG, MPGA, M4A, WAV, WEBM
+
+**Limite de Tamanho:**
+- Máximo: 25 MB por arquivo
+
+**Autenticação:**
+- Bearer Token: `Authorization: Bearer sk-...` (mesma key do Assistant)
+
+**Resposta:**
+```json
+{
+  "text": "Texto transcrito do áudio"
+}
+```
+
 ---
 
 ### 2. Twilio WhatsApp API
@@ -504,13 +606,33 @@ Usuário recebe: "Você gastou R$ 450,00 em Alimentação este mês, em 8 transa
 **Endpoint**: Webhook configurável (API Gateway URL)
 
 **Payload Recebido (POST):**
+
+Mensagem de texto:
 ```
 From=whatsapp:+5511999999999
 To=whatsapp:+14155238886
 Body=Olá, quanto gastei este mês?
 MessageSid=SM1234567890abcdef
 AccountSid=AC1234567890abcdef
+NumMedia=0
 ```
+
+Mensagem com áudio:
+```
+From=whatsapp:+5511999999999
+To=whatsapp:+14155238886
+Body=
+NumMedia=1
+MediaUrl0=https://api.twilio.com/2010-04-01/Accounts/.../Media/ME...
+MediaContentType0=audio/ogg
+MessageSid=SM1234567890abcdef
+AccountSid=AC1234567890abcdef
+```
+
+**URLs de Mídia:**
+- As URLs de mídia requerem autenticação HTTP Basic (Account SID + Auth Token)
+- Mídia disponível por tempo limitado (alguns dias)
+- Diversos formatos suportados: áudio, imagem, vídeo, documentos
 
 **Resposta Esperada (TwiML):**
 ```xml

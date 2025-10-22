@@ -21,7 +21,8 @@ O Assistente Financeiro é uma aplicação serverless que permite gerenciar suas
 
 ### Principais Características
 
-- ✅ Conversação natural via WhatsApp
+- ✅ Conversação natural via WhatsApp (texto e áudio)
+- ✅ Transcrição automática de mensagens de voz (Whisper API)
 - ✅ Registro automático de despesas
 - ✅ Consulta de gastos por categoria e período
 - ✅ Armazenamento em Excel (OneDrive)
@@ -65,9 +66,12 @@ API Gateway (AWS)
 
 ### Comandos Disponíveis
 
+Você pode interagir com o assistente por **texto** ou **áudio de voz**:
+
 - **Adicionar despesa**: "Gastei R$ 45 em almoço hoje"
 - **Consultar gastos**: "Quanto gastei em alimentação este mês?"
 - **Ver histórico**: "Mostre meus gastos da última semana"
+- **Mensagens de voz**: Envie áudio diretamente pelo WhatsApp - será transcrito automaticamente
 
 ## 📦 Pré-requisitos
 
@@ -398,6 +402,7 @@ finassist/
 ├── conversation_manager.py      # Orquestrador principal
 ├── services/                    # Serviços externos
 │   ├── openai_service.py       # OpenAI API
+│   ├── audio_service.py        # Transcrição de áudio (Whisper)
 │   ├── twilio_service.py       # Twilio/TwiML
 │   └── excel_service.py        # Microsoft Graph
 ├── data_access/                 # Persistência

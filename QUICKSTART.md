@@ -88,6 +88,8 @@ Olá!
 
 Você receberá uma resposta do assistente!
 
+**Dica:** Você também pode enviar **mensagens de voz** - elas serão automaticamente transcritas e processadas!
+
 ## Comandos Úteis
 
 ```bash
