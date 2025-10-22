@@ -207,9 +207,11 @@ Documentação
 
 ### OpenAI
 - Assistants API → ARQUITETURA.md, GLOSSARIO.md
+- Whisper API → ARQUITETURA.md, GLOSSARIO.md, DIAGRAMAS.md
 - Threads → ARQUITETURA.md, DIAGRAMAS.md
 - Tools → ARQUITETURA.md, REFERENCIA_RAPIDA.md
 - Function Calling → GLOSSARIO.md
+- Transcrição de Áudio → ARQUITETURA.md, GLOSSARIO.md
 
 ### Desenvolvimento
 - Setup → SETUP_AMBIENTE.md, PRIMEIROS_PASSOS.md
@@ -222,6 +224,14 @@ Documentação
 - FaaS → GLOSSARIO.md
 - Event-Driven → GLOSSARIO.md
 - Webhooks → GLOSSARIO.md
+- Speech-to-Text → GLOSSARIO.md
+- Transcrição → GLOSSARIO.md
+
+### Integrações
+- Twilio WhatsApp → ARQUITETURA.md, GLOSSARIO.md
+- Twilio Media API → ARQUITETURA.md, DIAGRAMAS.md
+- Microsoft Graph → ARQUITETURA.md, GLOSSARIO.md
+- Audio Service → ARQUITETURA.md, GLOSSARIO.md, DIAGRAMAS.md
 
 ---
 
@@ -327,7 +337,7 @@ Escolha seu próximo passo:
 ---
 
 **Documentação mantida pela equipe FinAssist**
-**Última atualização**: 21/10/2025 | **Versão**: 1.0
+**Última atualização**: 22/10/2025 | **Versão**: 1.1 - Suporte a áudio/transcrição adicionado
 
 ---
 

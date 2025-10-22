@@ -128,6 +128,13 @@ Serviço da OpenAI para criar assistentes de IA com capacidades de conversação
 
 **Vantagens**: Gerencia contexto automaticamente, suporta tool calling nativo.
 
+### Whisper API
+Serviço da OpenAI para transcrição de áudio usando o modelo Whisper. Converte arquivos de áudio em texto com alta precisão, suportando múltiplos idiomas.
+
+**No projeto**: Usado para transcrever mensagens de voz do WhatsApp em português brasileiro.
+
+**Formatos suportados**: OGG, MP3, MP4, MPEG, MPGA, M4A, WAV, WEBM (até 25 MB)
+
 ### Thread
 Sessão de conversação persistente entre usuário e assistant no OpenAI. Contém histórico completo de mensagens.
 
@@ -201,6 +208,21 @@ Token de curta duração (geralmente 1 hora) usado para autenticar requisições
 ### Bearer Token
 Tipo de access token enviado no header HTTP: `Authorization: Bearer {token}`
 
+### Media URL
+URL temporária fornecida pelo Twilio para acessar arquivos de mídia (áudio, imagem, vídeo) anexados a mensagens WhatsApp.
+
+**No projeto**: URLs de áudio são baixadas com autenticação HTTP Basic usando credenciais Twilio.
+
+**Características**:
+- Requer autenticação (Account SID + Auth Token)
+- Disponível por tempo limitado (alguns dias)
+- Formato: `https://api.twilio.com/2010-04-01/Accounts/.../Media/ME...`
+
+### Transcrição
+Processo de converter áudio falado em texto escrito usando reconhecimento de fala (Speech-to-Text).
+
+**No projeto**: Mensagens de voz do WhatsApp são transcritas automaticamente via Whisper API antes de serem processadas pelo assistant.
+
 ---
 
 ## Desenvolvimento
@@ -245,6 +267,11 @@ Métrica de quanto do código é executado durante testes. Relatório HTML mostr
 Análise estática de código para identificar erros, má formatação ou violações de estilo.
 
 **Ferramentas**: flake8 (linter), black (formatter)
+
+### Speech-to-Text (STT)
+Tecnologia de reconhecimento de fala que converte áudio em texto.
+
+**No projeto**: Implementado via Whisper API da OpenAI para transcrever mensagens de voz do WhatsApp em português brasileiro
 
 ### Docker
 Plataforma para executar aplicações em containers isolados e portáveis.
@@ -307,7 +334,19 @@ Componente que executa ferramentas (tools) solicitadas pelo OpenAI Assistant.
 ### Service Layer
 Camada de serviços que encapsula integrações com APIs externas.
 
-**Arquivos**: `services/openai_service.py`, `services/twilio_service.py`, `services/excel_service.py`
+**Arquivos**: `services/openai_service.py`, `services/audio_service.py`, `services/twilio_service.py`, `services/excel_service.py`
+
+### Audio Service
+Serviço responsável por processar mensagens de áudio do WhatsApp.
+
+**Arquivo**: `services/audio_service.py`
+
+**Responsabilidades**:
+- Download de arquivos de áudio das URLs do Twilio
+- Transcrição usando Whisper API
+- Combinação de texto e áudio transcrito
+
+**Fluxo**: URL do Twilio → Download com auth → Transcrição Whisper → Texto em português
 
 ### Lambda Handler
 Função entry point da aplicação Lambda que recebe eventos do API Gateway.
@@ -436,8 +475,8 @@ Camada que encapsula lógica de negócio e integrações externas.
 
 ---
 
-**Atualizado em**: 21/10/2025
-**Versão**: 1.0
+**Atualizado em**: 22/10/2025
+**Versão**: 1.1 - Adicionados termos relacionados a áudio e transcrição (Whisper API, Audio Service, Speech-to-Text, Media URL, Transcrição)
 
 > 💡 **Dica**: Use Ctrl+F (Cmd+F no Mac) para buscar termos específicos neste glossário!
 
