@@ -10,7 +10,8 @@
 # Uso: ./scripts/verify_environment.sh
 ################################################################################
 
-set -e  # Parar em caso de erro crítico
+# Não usar set -e para permitir contadores iniciarem em 0
+# set -e  # Parar em caso de erro crítico
 
 # Cores para output
 RED='\033[0;31m'
@@ -196,23 +197,33 @@ check_docker() {
     print_header "Docker"
 
     if command_exists docker; then
-        DOCKER_VERSION=$(docker --version | awk '{print $3}' | sed 's/,//')
-        print_success "Docker $DOCKER_VERSION instalado"
+        # Tentar obter versão
+        DOCKER_VERSION_OUTPUT=$(docker --version 2>&1)
+        
+        # Verificar se o comando foi bem-sucedido
+        if echo "$DOCKER_VERSION_OUTPUT" | grep -q "Docker version"; then
+            DOCKER_VERSION=$(echo "$DOCKER_VERSION_OUTPUT" | awk '{print $3}' | sed 's/,//')
+            print_success "Docker $DOCKER_VERSION instalado"
 
-        # Verificar se Docker está rodando
-        if docker ps > /dev/null 2>&1; then
-            print_success "Docker daemon está rodando"
+            # Verificar se Docker está rodando
+            if docker ps > /dev/null 2>&1; then
+                print_success "Docker daemon está rodando"
 
-            # Verificar containers rodando (opcional)
-            RUNNING_CONTAINERS=$(docker ps --format '{{.Names}}' 2>/dev/null)
-            if echo "$RUNNING_CONTAINERS" | grep -q "dynamodb"; then
-                print_success "DynamoDB Local está rodando"
+                # Verificar containers rodando (opcional)
+                RUNNING_CONTAINERS=$(docker ps --format '{{.Names}}' 2>/dev/null)
+                if echo "$RUNNING_CONTAINERS" | grep -q "dynamodb"; then
+                    print_success "DynamoDB Local está rodando"
+                else
+                    print_info "DynamoDB Local não está rodando (execute: make start-dynamodb-local)"
+                fi
             else
-                print_info "DynamoDB Local não está rodando (execute: make start-dynamodb-local)"
+                print_error "Docker daemon não está rodando"
+                print_info "Inicie Docker Desktop e certifique-se da integração WSL2"
             fi
         else
-            print_error "Docker daemon não está rodando"
-            print_info "Inicie Docker Desktop e certifique-se da integração WSL2"
+            print_error "Docker encontrado, mas não está configurado para WSL2"
+            print_info "Configure integração WSL2 em Docker Desktop:"
+            print_info "Settings → Resources → WSL Integration"
         fi
     else
         print_error "Docker não encontrado"
