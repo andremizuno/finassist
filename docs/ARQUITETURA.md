@@ -922,10 +922,10 @@ AccountSid=AC1234567890abcdef
 |-----------------|----------------------|----------|
 | **OpenAI API (GPT-4)** | $5.00 - $20.00 | Depende do uso (tokens input/output) |
 | **OpenAI Whisper** | $0.60 | ~100 áudios × 1min × $0.006/min |
-| **Twilio (assinatura mensal)** | $25.00 | WhatsApp Business API em produção |
-| **Twilio (mensagens)** | $5.00 | 1000 msgs × $0.005/msg |
+| **Twilio WhatsApp (mensagens)** | $5.00 | 1000 msgs × $0.005/msg |
+| **Twilio (número telefone)** | $1.15 | Opcional, se usar número próprio |
 | **Microsoft 365 (opcional)** | $0.00 - $7.00 | Se usar conta pessoal = grátis |
-| **Subtotal APIs** | **~$35.60 - $57.60** | |
+| **Subtotal APIs** | **~$11.75 - $33.75** | |
 
 #### 3.3. Total Consolidado
 
@@ -933,11 +933,11 @@ AccountSid=AC1234567890abcdef
 |-----------|-----------------|
 | AWS (infra) | $4.45 |
 | OpenAI (IA + áudio) | $5.60 - $20.60 |
-| Twilio (WhatsApp) | $30.00 |
+| Twilio (WhatsApp + número) | $6.15 |
 | Microsoft 365 | $0.00 - $7.00 |
-| **TOTAL** | **$40 - $62/mês** |
+| **TOTAL** | **$16 - $38/mês** |
 
-**Em Reais (R$):** ~R$ 200-310/mês (câmbio @R$5,00)
+**Em Reais (R$):** ~R$ 80-190/mês (câmbio @R$5,00)
 
 ---
 
@@ -954,9 +954,10 @@ AccountSid=AC1234567890abcdef
 #### 3.5. Opções para Reduzir Custos
 
 ##### ✅ Ambiente de Desenvolvimento (Twilio Sandbox)
-- **Custo:** ~$10-27/mês (sem assinatura Twilio)
-- **Limitação:** Apenas números pré-aprovados
+- **Custo:** ~$10-28/mês (mensagens Twilio são gratuitas no Sandbox!)
+- **Limitação:** Apenas números pré-aprovados que enviarem código de ativação
 - **Ideal para:** Testes, desenvolvimento, uso pessoal
+- **Economia:** $6.15/mês (não paga mensagens nem número)
 
 ##### ✅ Free Tier AWS (Novos Usuários)
 - **Lambda:** 1M requests/mês grátis (sempre)
@@ -968,7 +969,7 @@ AccountSid=AC1234567890abcdef
 - **Custo:** Primeiras 1000 conversas/mês **GRATUITAS**
 - **Após 1000:** $0.005-0.09/conversa (varia por país)
 - **Requer:** Integração diferente (não via Twilio)
-- **Economia potencial:** $30/mês
+- **Economia potencial:** $6.15/mês comparado ao Twilio
 
 ##### ✅ Otimizar OpenAI
 - Usar GPT-3.5 Turbo ao invés de GPT-4: ~70% mais barato
@@ -1008,8 +1009,8 @@ AccountSid=AC1234567890abcdef
 
 **Estimativa Conservadora (Worst Case):**
 - **Mínimo (sandbox + baixo uso):** $10/mês
-- **Típico (produção, 1000 msgs):** $40-50/mês
-- **Alto (uso intenso, 3000+ msgs):** $80-100/mês
+- **Típico (produção, 1000 msgs):** $16-38/mês
+- **Alto (uso intenso, 3000+ msgs):** $25-55/mês
 
 ---
 

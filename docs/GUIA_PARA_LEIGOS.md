@@ -85,73 +85,76 @@ O assistente foi na sua planilha, somou tudo que você gastou com comida no mês
 ### Preço Honesto (sem pegadinhas)
 
 Para uso normal de uma pessoa:
-- **Entre R$ 195 e R$ 270 por mês** (versão completa)
-- **OU R$ 70-145/mês** (versão de testes/desenvolvimento)
+- **Entre R$ 80 e R$ 190 por mês** (versão completa, produção)
+- **OU R$ 50-140/mês** (versão de testes/desenvolvimento com Sandbox grátis)
 
 "Caro ou barato?"
 
 **Compare com:**
-- 🍕 **3-4 pizzas delivery** = R$ 180-240
-- ☕ **30 cafés no Starbucks** = R$ 210
-- 🎬 **20 ingressos de cinema** = R$ 400
-- 💇 **2-3 idas ao cabeleireiro** = R$ 160-300
-- 📱 **Plano de celular bom** = R$ 100-150
+- 🍕 **2-3 pizzas delivery** = R$ 120-180
+- ☕ **15 cafés no Starbucks** = R$ 105
+- 🎬 **12 ingressos de cinema** = R$ 240
+- 💇 **1-2 idas ao cabeleireiro** = R$ 80-150
+- 📱 **Plano de celular básico** = R$ 60-100
+- 🎮 **Netflix + Spotify** = R$ 90/mês
 
-**Ou seja:** O custo de 3-4 pizzas por mês para ter controle total das suas finanças.
+**Ou seja:** O custo de 2-3 pizzas por mês para ter controle total das suas finanças.
 
 ### Breakdown (o que você paga):
 
 **Versão Completa (Produção):**
 | O que é | Quanto custa | O que faz |
 |---------|--------------|-----------|
-| Servidor na nuvem | R$ 20 | Onde o sistema roda |
-| Inteligência Artificial | R$ 25-100 | Cérebro que entende você |
-| WhatsApp Business (taxa mensal) | R$ 125 | Acesso à API oficial do WhatsApp |
-| WhatsApp Business (mensagens) | R$ 25 | Custo das 1000 mensagens |
-| **TOTAL** | **R$ 195-270** | Tudo funcionando! |
+| Servidor na nuvem (AWS) | R$ 22 | Onde o sistema roda |
+| Inteligência Artificial (OpenAI) | R$ 28-103 | Cérebro + ouvidos (GPT + Whisper) |
+| WhatsApp (Twilio mensagens) | R$ 25 | Custo das 1000 mensagens |
+| WhatsApp (número Twilio) | R$ 6 | Número de telefone virtual |
+| Microsoft 365 (opcional) | R$ 0-35 | Se já tem Outlook = grátis |
+| **TOTAL** | **R$ 80-190** | Tudo funcionando! |
 
 **Versão Desenvolvimento (Sandbox):**
 | O que é | Quanto custa | O que faz |
 |---------|--------------|-----------|
-| Servidor na nuvem | R$ 20 | Onde o sistema roda |
-| Inteligência Artificial | R$ 25-100 | Cérebro que entende você |
-| WhatsApp Sandbox | R$ 0 | Versão gratuita (limitada) |
-| WhatsApp (mensagens) | R$ 25 | Custo das 1000 mensagens |
-| **TOTAL** | **R$ 70-145** | Só você e números aprovados! |
+| Servidor na nuvem (AWS) | R$ 22 | Onde o sistema roda |
+| Inteligência Artificial (OpenAI) | R$ 28-103 | Cérebro + ouvidos (GPT + Whisper) |
+| WhatsApp Sandbox (Twilio) | R$ 0 | 100% GRATUITO! |
+| Microsoft 365 (opcional) | R$ 0-35 | Se já tem Outlook = grátis |
+| **TOTAL** | **R$ 50-160** | Só você e números aprovados! |
 
 ### 💡 Detalhe Importante:
 
 **Você só paga pelo que usar!**
-- Usou pouco no mês? Paga menos (~R$ 20-30 em dev, ou R$ 150-180 em produção)
-- Não usou nada? Paga quase nada (em dev) ou R$ 125 (taxa WhatsApp em produção)
-- Usou muito? Paga mais (~R$ 100-150 em dev, ou R$ 250-300 em produção)
+- Usou pouco no mês? Paga menos (~R$ 50-60 em dev, ou R$ 80-90 em produção)
+- Não usou nada? Paga só o servidor (~R$ 22 em ambos)
+- Usou muito? Paga mais (~R$ 100-160 em dev, ou R$ 130-190 em produção)
 
 É tipo conta de luz: quanto mais usa, mais paga.
-**Mas atenção:** Em produção, a taxa do WhatsApp Business (R$ 125/mês) é fixa.
+**Ótima notícia:** Twilio não tem taxa fixa mensal! Só paga pelas mensagens que enviar.
 
 ---
 
 ### 🔍 Custos Detalhados (para quem quer entender tudo)
 
-#### 💻 Servidor na Nuvem (AWS) - R$ 20-25/mês
-- **Lambda:** Onde o programa roda (muito barato, ~R$ 1)
-- **API Gateway:** Porta de entrada (R$ 17)
-- **DynamoDB:** Memória do sistema (R$ 1-2)
-- **CloudWatch:** Logs do sistema (R$ 2-5, opcional)
+#### 💻 Servidor na Nuvem (AWS) - R$ 22/mês
+- **Lambda:** Onde o programa roda (~R$ 1)
+- **API Gateway:** Porta de entrada (~R$ 17.50)
+- **DynamoDB:** Memória do sistema (~R$ 1.25)
+- **CloudWatch:** Logs do sistema (~R$ 2.50, pode desabilitar)
 
-#### 🤖 Inteligência Artificial (OpenAI) - R$ 25-100/mês
+#### 🤖 Inteligência Artificial (OpenAI) - R$ 28-103/mês
 - **GPT-4 (cérebro):** R$ 25-100 dependendo do quanto você conversa
-- **Whisper (ouvidos):** R$ 3-5 para transcrever áudios
-- **Dica:** Use GPT-3.5 para economizar ~70%!
+- **Whisper (ouvidos):** R$ 3 para transcrever ~100 áudios de 1min
+- **Dica:** Use GPT-3.5 Turbo para economizar ~70%!
 
-#### 📱 WhatsApp Business (Twilio) - R$ 125-150/mês (produção)
-- **Assinatura mensal:** R$ 125 (fixo, todo mês)
-- **Mensagens:** R$ 25 para 1000 mensagens
-- **Alternativa:** Twilio Sandbox = GRÁTIS mas só você usa
+#### 📱 WhatsApp (Twilio) - R$ 25-31/mês (produção)
+- **Mensagens:** R$ 25 para 1000 mensagens ($0.005 cada)
+- **Número virtual:** R$ 6/mês (opcional, mas recomendado)
+- **SEM taxa de assinatura mensal!** 🎉
+- **Sandbox (dev):** 100% GRATUITO, mas só números pré-aprovados
 
 #### 📊 Microsoft 365 (OneDrive + Excel) - R$ 0-35/mês
-- **Conta pessoal:** GRÁTIS (se já tem email @outlook.com)
-- **Microsoft 365 Família:** R$ 35/mês (6 pessoas)
+- **Conta pessoal (@outlook.com):** GRÁTIS
+- **Microsoft 365 Família:** R$ 35/mês (6 pessoas, 1TB cada)
 
 ---
 
@@ -176,11 +179,14 @@ Para uso normal de uma pessoa:
 
 | Cenário | Custo/mês | Para quem é |
 |---------|-----------|-------------|
-| **Desenvolvimento (você + família)** | R$ 70-145 | Teste, uso pessoal, Twilio Sandbox |
-| **Produção Light (1 pessoa)** | R$ 195-270 | Uso real, profissional, WhatsApp oficial |
-| **Produção Heavy (uso intenso)** | R$ 400-500 | Muitas mensagens, áudios, múltiplos usuários |
+| **Desenvolvimento (Sandbox)** | R$ 50-160 | Teste, uso pessoal, família (WhatsApp grátis!) |
+| **Produção Light (1 pessoa)** | R$ 80-190 | Uso real, profissional, número dedicado |
+| **Produção Heavy (uso intenso)** | R$ 130-280 | Muitas mensagens (3000+), muitos áudios |
 
-**Recomendação:** Comece com Twilio Sandbox (grátis) e só passe para produção quando precisar de múltiplos usuários ou uso comercial.
+**🎯 Recomendação:** 
+- Comece com **Twilio Sandbox** (100% grátis) para testes
+- Passe para produção quando precisar de múltiplos usuários
+- **Não há taxa mensal fixa no Twilio!** Só paga pelo que usar 🎉
 
 ---
 
