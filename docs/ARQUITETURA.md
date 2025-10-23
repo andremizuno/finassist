@@ -899,21 +899,117 @@ AccountSid=AC1234567890abcdef
 
 ### 3. Custos Estimados
 
-**Cenário**: 1000 mensagens/mês
+**Cenário**: 1000 mensagens/mês (uso típico individual)
 
-| Serviço | Custo Estimado (USD) |
-|---------|----------------------|
-| AWS Lambda | $0.20 |
-| API Gateway | $3.50 |
-| DynamoDB | $0.25 |
-| OpenAI API | $5.00 - $20.00 |
-| Twilio (WhatsApp) | $0.005/msg = $5.00 |
-| **Total** | **~$14 - $29/mês** |
+#### 3.1. Custos de Infraestrutura AWS
 
-**Free Tier:**
-- Lambda: 1M requests/mês grátis
-- DynamoDB: 25GB storage + 25 read/write units grátis
-- API Gateway: 1M calls/mês grátis (primeiros 12 meses)
+| Serviço AWS | Custo Estimado (USD) | Detalhes |
+|-------------|----------------------|----------|
+| **AWS Lambda** | $0.20 | 1000 execuções × 512MB × ~3s médio |
+| **API Gateway** | $3.50 | 1000 requests REST API |
+| **DynamoDB** | $0.25 | Pay-per-request, ~2000 operações/mês |
+| **CloudWatch Logs** | $0.50 | ~500MB logs/mês (opcional, pode desabilitar) |
+| **Subtotal AWS** | **~$4.45** | |
+
+**⚠️ Nota sobre CloudWatch:**
+- O CloudWatch Logs é automaticamente habilitado pelo Lambda
+- Primeiros 5GB/mês grátis no Free Tier, depois $0.50/GB
+- Para economizar: reduzir logs ou desabilitar em produção
+
+#### 3.2. Custos de APIs Externas
+
+| Serviço Externo | Custo Estimado (USD) | Detalhes |
+|-----------------|----------------------|----------|
+| **OpenAI API (GPT-4)** | $5.00 - $20.00 | Depende do uso (tokens input/output) |
+| **OpenAI Whisper** | $0.60 | ~100 áudios × 1min × $0.006/min |
+| **Twilio (assinatura mensal)** | $25.00 | WhatsApp Business API em produção |
+| **Twilio (mensagens)** | $5.00 | 1000 msgs × $0.005/msg |
+| **Microsoft 365 (opcional)** | $0.00 - $7.00 | Se usar conta pessoal = grátis |
+| **Subtotal APIs** | **~$35.60 - $57.60** | |
+
+#### 3.3. Total Consolidado
+
+| Categoria | Custo (USD/mês) |
+|-----------|-----------------|
+| AWS (infra) | $4.45 |
+| OpenAI (IA + áudio) | $5.60 - $20.60 |
+| Twilio (WhatsApp) | $30.00 |
+| Microsoft 365 | $0.00 - $7.00 |
+| **TOTAL** | **$40 - $62/mês** |
+
+**Em Reais (R$):** ~R$ 200-310/mês (câmbio @R$5,00)
+
+---
+
+#### 3.4. Custos Não Recorrentes (Setup Inicial)
+
+| Item | Custo | Frequência |
+|------|-------|------------|
+| Registro domínio (opcional) | $12-15/ano | Anual |
+| Certificado SSL | $0 | Grátis (Let's Encrypt/AWS) |
+| Setup inicial AWS | $0 | Uma vez (Free Tier) |
+
+---
+
+#### 3.5. Opções para Reduzir Custos
+
+##### ✅ Ambiente de Desenvolvimento (Twilio Sandbox)
+- **Custo:** ~$10-27/mês (sem assinatura Twilio)
+- **Limitação:** Apenas números pré-aprovados
+- **Ideal para:** Testes, desenvolvimento, uso pessoal
+
+##### ✅ Free Tier AWS (Novos Usuários)
+- **Lambda:** 1M requests/mês grátis (sempre)
+- **DynamoDB:** 25GB + 25 RCU/WCU grátis (sempre)
+- **API Gateway:** 1M calls/mês grátis (primeiros 12 meses)
+- **Economia:** ~$4/mês nos primeiros 12 meses
+
+##### ✅ Alternativa WhatsApp: Meta Cloud API
+- **Custo:** Primeiras 1000 conversas/mês **GRATUITAS**
+- **Após 1000:** $0.005-0.09/conversa (varia por país)
+- **Requer:** Integração diferente (não via Twilio)
+- **Economia potencial:** $30/mês
+
+##### ✅ Otimizar OpenAI
+- Usar GPT-3.5 Turbo ao invés de GPT-4: ~70% mais barato
+- Limitar histórico de mensagens no contexto
+- **Economia potencial:** $10-15/mês
+
+---
+
+#### 3.6. Custos Ocultos e Atenções
+
+| Item | Descrição | Como Evitar |
+|------|-----------|-------------|
+| **Dados de saída AWS** | Transfer OUT para internet | Mínimo (apenas respostas JSON) |
+| **Twilio números adicionais** | $1.15/mês por número | Usar apenas 1 número |
+| **OpenAI token overflow** | Custos disparam com contextos longos | Limitar histórico, usar truncate |
+| **DynamoDB hot partition** | Throttling = custo extra | PAY_PER_REQUEST evita isso |
+| **CloudWatch métricas custom** | $0.30/métrica | Não usamos métricas custom |
+
+**✅ Garantias:**
+- **Não há cobrança por:**
+  - VPC (não usamos)
+  - NAT Gateway (não usamos)
+  - Load Balancer (não usamos)
+  - EC2 (não usamos)
+  - S3 (não usamos no momento)
+  - RDS (não usamos)
+
+---
+
+#### 3.7. Monitoramento de Custos
+
+**Recomendações:**
+1. **AWS Cost Explorer:** Monitore custos semanalmente
+2. **AWS Budgets:** Configure alerta para > $10/mês
+3. **Twilio Console:** Verifique uso de mensagens
+4. **OpenAI Dashboard:** Acompanhe tokens consumidos
+
+**Estimativa Conservadora (Worst Case):**
+- **Mínimo (sandbox + baixo uso):** $10/mês
+- **Típico (produção, 1000 msgs):** $40-50/mês
+- **Alto (uso intenso, 3000+ msgs):** $80-100/mês
 
 ---
 

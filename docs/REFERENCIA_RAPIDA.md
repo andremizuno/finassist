@@ -198,8 +198,11 @@ make deploy         # Deploy para AWS
 | API Gateway | $3.50 |
 | DynamoDB | $0.25 |
 | OpenAI API | $5 - $20 |
-| Twilio WhatsApp | $5.00 |
-| **Total** | **~$14 - $29** |
+| **Twilio WhatsApp (assinatura)** | **$25.00** |
+| Twilio WhatsApp (mensagens) | $5.00 |
+| **Total** | **~$39 - $54** |
+
+**Nota:** Twilio Sandbox (dev) é gratuito mas limitado.
 
 ---
 

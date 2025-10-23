@@ -85,35 +85,102 @@ O assistente foi na sua planilha, somou tudo que você gastou com comida no mês
 ### Preço Honesto (sem pegadinhas)
 
 Para uso normal de uma pessoa:
-- **Entre R$ 70 e R$ 145 por mês**
+- **Entre R$ 195 e R$ 270 por mês** (versão completa)
+- **OU R$ 70-145/mês** (versão de testes/desenvolvimento)
 
 "Caro ou barato?"
 
 **Compare com:**
-- 🍕 **1 pizza delivery** = R$ 60-80
-- ☕ **10 cafés no Starbucks** = R$ 70
-- 🎬 **7 ingressos de cinema** = R$ 140
-- 💇 **1 ida ao cabeleireiro** = R$ 80-150
+- 🍕 **3-4 pizzas delivery** = R$ 180-240
+- ☕ **30 cafés no Starbucks** = R$ 210
+- 🎬 **20 ingressos de cinema** = R$ 400
+- 💇 **2-3 idas ao cabeleireiro** = R$ 160-300
+- 📱 **Plano de celular bom** = R$ 100-150
 
-**Ou seja:** O custo de 1-2 pizzas por mês para ter controle total das suas finanças.
+**Ou seja:** O custo de 3-4 pizzas por mês para ter controle total das suas finanças.
 
 ### Breakdown (o que você paga):
 
+**Versão Completa (Produção):**
 | O que é | Quanto custa | O que faz |
 |---------|--------------|-----------|
 | Servidor na nuvem | R$ 20 | Onde o sistema roda |
 | Inteligência Artificial | R$ 25-100 | Cérebro que entende você |
-| WhatsApp Business | R$ 25 | Permite usar WhatsApp |
-| **TOTAL** | **R$ 70-145** | Tudo funcionando! |
+| WhatsApp Business (taxa mensal) | R$ 125 | Acesso à API oficial do WhatsApp |
+| WhatsApp Business (mensagens) | R$ 25 | Custo das 1000 mensagens |
+| **TOTAL** | **R$ 195-270** | Tudo funcionando! |
+
+**Versão Desenvolvimento (Sandbox):**
+| O que é | Quanto custa | O que faz |
+|---------|--------------|-----------|
+| Servidor na nuvem | R$ 20 | Onde o sistema roda |
+| Inteligência Artificial | R$ 25-100 | Cérebro que entende você |
+| WhatsApp Sandbox | R$ 0 | Versão gratuita (limitada) |
+| WhatsApp (mensagens) | R$ 25 | Custo das 1000 mensagens |
+| **TOTAL** | **R$ 70-145** | Só você e números aprovados! |
 
 ### 💡 Detalhe Importante:
 
 **Você só paga pelo que usar!**
-- Usou pouco no mês? Paga menos (~R$ 20-30)
-- Não usou nada? Paga quase nada
-- Usou muito? Paga mais (~R$ 200-300)
+- Usou pouco no mês? Paga menos (~R$ 20-30 em dev, ou R$ 150-180 em produção)
+- Não usou nada? Paga quase nada (em dev) ou R$ 125 (taxa WhatsApp em produção)
+- Usou muito? Paga mais (~R$ 100-150 em dev, ou R$ 250-300 em produção)
 
 É tipo conta de luz: quanto mais usa, mais paga.
+**Mas atenção:** Em produção, a taxa do WhatsApp Business (R$ 125/mês) é fixa.
+
+---
+
+### 🔍 Custos Detalhados (para quem quer entender tudo)
+
+#### 💻 Servidor na Nuvem (AWS) - R$ 20-25/mês
+- **Lambda:** Onde o programa roda (muito barato, ~R$ 1)
+- **API Gateway:** Porta de entrada (R$ 17)
+- **DynamoDB:** Memória do sistema (R$ 1-2)
+- **CloudWatch:** Logs do sistema (R$ 2-5, opcional)
+
+#### 🤖 Inteligência Artificial (OpenAI) - R$ 25-100/mês
+- **GPT-4 (cérebro):** R$ 25-100 dependendo do quanto você conversa
+- **Whisper (ouvidos):** R$ 3-5 para transcrever áudios
+- **Dica:** Use GPT-3.5 para economizar ~70%!
+
+#### 📱 WhatsApp Business (Twilio) - R$ 125-150/mês (produção)
+- **Assinatura mensal:** R$ 125 (fixo, todo mês)
+- **Mensagens:** R$ 25 para 1000 mensagens
+- **Alternativa:** Twilio Sandbox = GRÁTIS mas só você usa
+
+#### 📊 Microsoft 365 (OneDrive + Excel) - R$ 0-35/mês
+- **Conta pessoal:** GRÁTIS (se já tem email @outlook.com)
+- **Microsoft 365 Família:** R$ 35/mês (6 pessoas)
+
+---
+
+### ⚠️ Cuidado com Surpresas!
+
+**TODOS os custos estão incluídos acima.** Não há:
+- ❌ Taxas escondidas
+- ❌ Custos de servidor tradicional
+- ❌ Cobrança por armazenamento de fotos/vídeos
+- ❌ Taxas de banco de dados relacional (MySQL, PostgreSQL)
+- ❌ Certificados SSL pagos
+- ❌ VPC, Load Balancer, NAT Gateway (não usamos)
+
+**Possíveis custos extras (raros):**
+- 📞 Número de telefone Twilio adicional: R$ 6/mês
+- 🌐 Domínio personalizado (opcional): R$ 60-80/ano
+- 🔊 Muitos áudios longos (>1h/mês): +R$ 20-40
+
+---
+
+### 💰 Resumo Final: Quanto REALMENTE custa?
+
+| Cenário | Custo/mês | Para quem é |
+|---------|-----------|-------------|
+| **Desenvolvimento (você + família)** | R$ 70-145 | Teste, uso pessoal, Twilio Sandbox |
+| **Produção Light (1 pessoa)** | R$ 195-270 | Uso real, profissional, WhatsApp oficial |
+| **Produção Heavy (uso intenso)** | R$ 400-500 | Muitas mensagens, áudios, múltiplos usuários |
+
+**Recomendação:** Comece com Twilio Sandbox (grátis) e só passe para produção quando precisar de múltiplos usuários ou uso comercial.
 
 ---
 
